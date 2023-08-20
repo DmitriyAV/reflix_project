@@ -1,0 +1,31 @@
+body {
+    background: #457fb4;
+    font-family: "Roboto", sans-serif;
+    display: flex;
+    height: 100vh;
+}
+
+.container {
+    margin: auto;
+    display: flex;
+}
+
+.main-container {
+    width: 270px;
+    height: 540px;
+    position: relative;
+    margin: 0 20px;
+}
+
+.poster-container {
+    width: 230px;
+    position: absolute;
+    top: 0;
+    left: 20px;
+    z-index: 9999;
+}
+
+.poster {
+    width: 100%;
+    box-shadow: 0 5px 20px 3px rgba(0, 0, 0, 0.6);
+}

@@ -1,25 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
+import "./css/App.css"
+import 'bootstrap/dist/css/bootstrap.css';
+import {useState} from "react";
+import {USERS_DATA} from "./constants/Constats";
+import Landing from "./components/Landing";
+import Catalog from "./components/catalog/Catalog";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+    const [users, setUser] = useState(USERS_DATA)
+    return (
+        <Router>
+            <Routes>
+                <Route path={'/'} element={ <Landing users={users}/>} />
+                <Route path={'/:catalog'} element={<Catalog />} />
+            </Routes>
+        </Router>
+    )
 }
 
 export default App;
