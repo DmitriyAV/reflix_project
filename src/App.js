@@ -13,7 +13,7 @@ function App() {
             <Routes>
                 <Route path={'/'} element={ <Landing users={users}/>} />
                 <Route path={'/:catalog'} element={<Catalog />} />
-                <Route path="/movies/:id" component={<MovieDetail />} />
+                <Route path={'/movies/:movieID'} element={<MovieDetail />} />
             </Routes>
         </Router>
     )

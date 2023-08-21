@@ -4,14 +4,14 @@ import {Link} from "react-router-dom";
 
 
 function Catalog() {
-    const [searchRes, setSearchRes] = useState([])
+
     const [isLoading, setIsLoading] = useState(null)
     const [movies, setMovies] = useState([]);
     const [rentedMovies, setRentedMovies] = useState([]);
 
 
     useEffect(() => {
-
+        setIsLoading(true)
         const apiKey = process.env.REACT_APP_API_KEY;
         const url = 'https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc';
         const options = {
@@ -28,8 +28,7 @@ function Catalog() {
             .catch(err => console.error('error:' + err));
 
         return () => {
-            alert("loading is done")
-            setIsLoading(null)
+            setIsLoading(true)
         }
     }, []);
 
@@ -44,8 +43,15 @@ function Catalog() {
         setRentedMovies(updatedRentedMovies);
     };
 
+    if (!movies) {
+        return <div>Loading...</div>;
+    }
+
     return (
         <div>
+            {isLoading && (
+                <div>Loading...</div>
+            )}
             <ReflixNavbar rent={rentMovie}/>
             <div className={"container"}>
                 {movies.map((movie) => (
