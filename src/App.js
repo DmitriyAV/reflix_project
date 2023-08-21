@@ -1,10 +1,9 @@
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
-import "./css/App.css"
-import 'bootstrap/dist/css/bootstrap.css';
 import {useState} from "react";
 import {USERS_DATA} from "./constants/Constats";
 import Landing from "./components/Landing";
 import Catalog from "./components/catalog/Catalog";
+import MovieDetail from "./components/catalog/movie/MovieDetail";
 
 function App() {
 
@@ -14,6 +13,7 @@ function App() {
             <Routes>
                 <Route path={'/'} element={ <Landing users={users}/>} />
                 <Route path={'/:catalog'} element={<Catalog />} />
+                <Route path={'/movies/:movieID'} element={<MovieDetail />} />
             </Routes>
         </Router>
     )
