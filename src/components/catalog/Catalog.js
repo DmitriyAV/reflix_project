@@ -9,6 +9,7 @@ function Catalog() {
     const [isLoading, setIsLoading] = useState(null)
     const [movies, setMovies] = useState([]);
     const [rentedMovies, setRentedMovies] = useState([]);
+    const [movieGif, setMovieGif] = useState()
 
     useEffect(() => {
         setIsLoading(true)
@@ -31,13 +32,37 @@ function Catalog() {
             setIsLoading(true)
         }
     }, []);
+
+    const fetchMovieGif = (url) => {
+        return fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                const movieGif = data.data[0];
+
+                if (movieGif) {
+                    return movieGif.embed_url;
+                } else {
+                    return null;
+                }
+            })
+            .catch(error => {
+                console.error("Error fetching movie gif:", error);
+            });
+    };
+
     const handleClose = () => setOpen(false);
     const handleOpen = () => setOpen(true);
 
     const rentMovie = (movie) => {
+        const api_key = "NjQjqYxuRKXNyE9dbjyHmq3JfQNe3neA"
+        const url = `https://api.giphy.com/v1/gifs/search?q=${movie.title}&api_key=${api_key}&limit=5`;
         if (!rentedMovies.includes(movie)) {
             setRentedMovies([...rentedMovies, movie]);
             handleOpen()
+            fetchMovieGif(url)
+                .then(fetchedGif => {
+                    setMovieGif(fetchedGif);
+                });
         }
     };
 
@@ -62,7 +87,7 @@ function Catalog() {
                         <h3>{movie.title}</h3>
                         <button onClick={() => rentMovie(movie)}>Rent</button>
                         <Link to={`/movies/${movie.id}`}>Details</Link>
-                        <BasicModal show={open} close={() => handleClose} title={movie.title}/>
+                        <BasicModal show={open} close={() => handleClose} title={movie.title} gif={movieGif}/>
                     </div>
                 ))}
 

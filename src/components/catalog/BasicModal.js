@@ -20,29 +20,7 @@ const style = {
     p: 4,
 };
 
-export default function BasicModal({show, close, title}) {
-
-    const [giphy, setGiphy] = useState(null)
-
-
-    const fetchMovieGif = () => {
-        const api_key = "NjQjqYxuRKXNyE9dbjyHmq3JfQNe3neA"
-        const url = `https://api.giphy.com/v1/gifs/search?q=${title}&api_key=${api_key}&limit=5`;
-        return fetch(url)
-            .then(response => response.json())
-            .then(data => {
-                const movieGif = data.data[0];
-
-                if (movieGif) {
-                    return movieGif.embed_url;
-                } else {
-                    return null;
-                }
-            })
-            .catch(error => {
-                console.error("Error fetching movie gif:", error);
-            });
-    };
+export default function BasicModal({show, close, title, gif}) {
 
     return (
         <>
@@ -59,7 +37,7 @@ export default function BasicModal({show, close, title}) {
                             <Typography id="modal-modal-title" variant="h6" component="h2">
                                 {title}
                             </Typography>
-                            {giphy && <CardMedia image={ () => fetchMovieGif()}></CardMedia>}
+                            {gif && <CardMedia image={gif}></CardMedia>}
                         </Box>
                     </Modal>
                 </>
