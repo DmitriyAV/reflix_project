@@ -24,7 +24,7 @@ function MovieDetail() {
             .then(json => setMovieDetails(json))
             .catch(err => console.error('error:', err));
 
-    }, [movieID]);
+    }, [movieDetails]);
 
     if (!movieDetails) {
         return <div>Loading...</div>;

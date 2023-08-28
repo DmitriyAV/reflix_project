@@ -1,14 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import ReflixNavbar from "../ReflixNavbar";
 import {Link} from "react-router-dom";
+import BasicModal from "./BasicModal";
 
 
 function Catalog() {
-
+    const [open, setOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(null)
     const [movies, setMovies] = useState([]);
     const [rentedMovies, setRentedMovies] = useState([]);
-
 
     useEffect(() => {
         setIsLoading(true)
@@ -31,12 +31,16 @@ function Catalog() {
             setIsLoading(true)
         }
     }, []);
+    const handleClose = () => setOpen(false);
+    const handleOpen = () => setOpen(true);
 
     const rentMovie = (movie) => {
         if (!rentedMovies.includes(movie)) {
             setRentedMovies([...rentedMovies, movie]);
+            handleOpen()
         }
     };
+
 
     const unrentMovie = (movie) => {
         const updatedRentedMovies = rentedMovies.filter((m) => m.id !== movie.id);
@@ -48,10 +52,7 @@ function Catalog() {
     }
 
     return (
-        <div>
-            {isLoading && (
-                <div>Loading...</div>
-            )}
+        <>
             <ReflixNavbar rent={rentMovie}/>
             <div className={"container"}>
                 {movies.map((movie) => (
@@ -61,6 +62,7 @@ function Catalog() {
                         <h3>{movie.title}</h3>
                         <button onClick={() => rentMovie(movie)}>Rent</button>
                         <Link to={`/movies/${movie.id}`}>Details</Link>
+                        <BasicModal show={open} close={() => handleClose} title={movie.title}/>
                     </div>
                 ))}
 
@@ -78,7 +80,8 @@ function Catalog() {
                     </div>
                 )}
             </div>
-        </div>
+        </>
+
     );
 }
 
